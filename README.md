@@ -50,6 +50,19 @@ metrics| Train | Dev | Test |
   --- |--- | --- | --- | 
  acc | 0.54 | 0.53 | 0.53 |
  loss | 1.23 | 1.33 | 1.33 |
+ 
+ ### 7-Class
+ - [Extract_feature_7_class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/Extract_feature_7_class.py)
+ - [lstm_keras_7-class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/lstm_keras_7-class.py)
+
+negative: 1192, neutral: 103, positive: 482, strong_negative: 185, strong_positive: 237
+
+![Figure 4](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/raw/master/images/7_class_model.png)
+
+metrics| Train | Dev | Test | 
+  --- |--- | --- | --- | 
+ acc | 0.54 | 0.53 | 0.53 |
+ loss | 1.23 | 1.33 | 1.33 |
 
 # Plot acc-loss demo
   - [plot_acc-loss.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/plot_acc-loss.py)
