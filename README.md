@@ -32,7 +32,11 @@ metrics| Train | Dev | Test |
 negative: 1192, neutral: 103, positive: 482, strong_negative: 185, strong_positive: 237
 
 ![Figure 2](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/raw/master/images/5_class_model.png)
- 
+
+metrics| Train | Dev | Test | 
+  --- |--- | --- | --- | 
+ acc | 0.54 | 0.53 | 0.53 |
+ loss | 1.23 | 1.33 | 1.33 |
 
 # Plot acc-loss demo
   - [plot_acc-loss.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/plot_acc-loss.py)
