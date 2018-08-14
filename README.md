@@ -28,6 +28,7 @@ metrics| Train | Dev | Test |
 ### 3-Class
 
 
+negative: 185, neutral: 1777, positive: 237
 
 
 ### 5-Class
