@@ -13,7 +13,9 @@ Audio Sentiment Analysis Based on MOSI Dataset
  - [lstm_keras_2-class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/lstm_keras_2-class.py)
  
 polarity:1454, neutral:745
- 
+
+![Figure 1](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/raw/master/images/2_class_model.png)
+
 metrics| Train | Dev | Test | 
   --- |--- | --- | --- | 
  acc | 0.65 | 0.69 | 0.69 |
