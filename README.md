@@ -55,7 +55,8 @@ metrics| Train | Dev | Test |
  - [Extract_feature_7_class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/Extract_feature_7_class.py)
  - [lstm_keras_7-class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/lstm_keras_7-class.py)
 
-negative: 1192, neutral: 103, positive: 482, strong_negative: 185, strong_positive: 237
+negative: 653, neutral: 387, positive: 634, strong_negative: 80, strong_positive: 85, week_negative: 152,  week_positive: 208
+0
 
 ![Figure 4](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/raw/master/images/7_class_model.png)
 
