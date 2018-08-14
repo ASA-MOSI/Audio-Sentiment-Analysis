@@ -26,7 +26,8 @@ metrics| Train | Dev | Test |
  loss | 0.65 | 0.62 | 0.62 |
  
 ### 5-Class
-
+ - [Extract_feature_5_class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/Extract_feature_5_class.py)
+ - [lstm_keras_5-class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/lstm_keras_5-class.py)
 
 negative: 1192, neutral: 103, positive: 482, strong_negative: 185, strong_positive: 237
  
