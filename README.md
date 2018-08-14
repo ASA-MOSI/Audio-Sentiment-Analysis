@@ -16,7 +16,7 @@ Audio Sentiment Analysis Based on MOSI Dataset
  - [Extract_feature_2_class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/Extract_feature_2_class.py)
  - [lstm_keras_2-class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/lstm_keras_2-class.py)
  
-polarity:1454, neutral:745
+polarity: 1454, neutral: 745
 
 ![Figure 1](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/raw/master/images/2_class_model.png)
 
@@ -24,6 +24,11 @@ metrics| Train | Dev | Test |
   --- |--- | --- | --- | 
  acc | 0.65 | 0.69 | 0.69 |
  loss | 0.65 | 0.62 | 0.62 |
+ 
+### 5-Class
+
+
+negative: 1192, neutral: 103, positive: 482, strong_negative: 185, strong_positive: 237
  
 
 # Plot acc-loss demo
