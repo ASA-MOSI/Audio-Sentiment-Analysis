@@ -62,8 +62,8 @@ strong_negative: 80, strong_positive: 85, week_negative: 152,  week_positive: 20
 
 metrics| Train | Dev | Test | 
   --- |--- | --- | --- | 
- acc | 0.54 | 0.53 | 0.53 |
- loss | 1.23 | 1.33 | 1.33 |
+ acc | 0.29 | 0.26 | 0.26 |
+ loss | 1.70 | 1.66 | 1.66 |
 
 # Plot acc-loss demo
   - [plot_acc-loss.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/plot_acc-loss.py)
