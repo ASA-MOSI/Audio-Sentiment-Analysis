@@ -30,6 +30,8 @@ metrics| Train | Dev | Test |
  - [lstm_keras_5-class.py](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/blob/master/lstm_keras_5-class.py)
 
 negative: 1192, neutral: 103, positive: 482, strong_negative: 185, strong_positive: 237
+
+![Figure 2](https://github.com/ASA-MOSI/Audio-Sentiment-Analysis/raw/master/images/5_class_model.png)
  
 
 # Plot acc-loss demo
