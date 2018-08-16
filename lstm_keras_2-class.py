@@ -29,6 +29,7 @@ from keras.layers import Dense
 from keras.optimizers import Adam
 
 from Extract_feature_2_class import Extract_feature  # local python class with Audio feature extraction (librosa)
+from Extract_Spectrum_Feature_2_class import Extract_Spectrum_feature
 from keras.layers import Bidirectional
 import matplotlib.pyplot as plt
 
@@ -78,9 +79,13 @@ class LossHistory(keras.callbacks.Callback):
 # Turn off TF verbose logging
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
 print("------Begin------")
-features = Extract_feature()
-features.load_preprocess_data()
-# genre_features.load_deserialize_data()
+
+Spectrum_Feature = Extract_Spectrum_feature()
+Spectrum_Feature.load_preprocess_data()
+#features = Extract_feature()
+#features.load_preprocess_data()
+'''
+# features.load_deserialize_data()
 # Keras optimizer defaults:
 # Adam   : lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8, decay=0.
 # RMSprop: lr=0.001, rho=0.9, epsilon=1e-8, decay=0.
@@ -114,7 +119,7 @@ history = LossHistory()
 
 print("Training ...")
 model.fit(features.train_X, features.train_Y, batch_size=batch_size, verbose=1,
-          epochs=nb_epochs, validation_data=(features.test_X, features.test_Y), callbacks=[history])
+          epochs=nb_epochs, validation_data=(features.test_X, features.test_Y), callbacks=[history], )
 
 print("\nTesting ...")
 score, accuracy = model.evaluate(features.test_X, features.test_Y, batch_size=batch_size, verbose=1)
@@ -123,3 +128,4 @@ print("Test accuracy:  ", accuracy)
 
 # 绘制acc-loss曲线
 history.loss_plot('epoch')
+'''
