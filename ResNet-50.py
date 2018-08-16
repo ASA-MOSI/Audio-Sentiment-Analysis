@@ -5,12 +5,80 @@ from keras.layers import add, Flatten
 # from keras.layers.convolutional import Conv2D,MaxPooling2D,AveragePooling2D
 from keras.optimizers import SGD
 import numpy as np
-import cv2
+import keras
+import matplotlib.pyplot as plt
+import os
+from Extract_Spectrum_Feature_2_class import Extract_Spectrum_feature
+from keras.optimizers import Adam
 
-seed = 7
+seed = 1234
 np.random.seed(seed)
 
+# 写一个LossHistory类，保存loss和acc
+class LossHistory(keras.callbacks.Callback):
+    def on_train_begin(self, logs={}):
+        self.losses = {'batch': [], 'epoch': []}
+        self.accuracy = {'batch': [], 'epoch': []}
+        self.val_loss = {'batch': [], 'epoch': []}
+        self.val_acc = {'batch': [], 'epoch': []}
 
+    def on_batch_end(self, batch, logs={}):
+        self.losses['batch'].append(logs.get('loss'))
+        self.accuracy['batch'].append(logs.get('acc'))
+        self.val_loss['batch'].append(logs.get('val_loss'))
+        self.val_acc['batch'].append(logs.get('val_acc'))
+
+    def on_epoch_end(self, batch, logs={}):
+        self.losses['epoch'].append(logs.get('loss'))
+        self.accuracy['epoch'].append(logs.get('acc'))
+        self.val_loss['epoch'].append(logs.get('val_loss'))
+        self.val_acc['epoch'].append(logs.get('val_acc'))
+
+    def loss_plot(self, loss_type):
+        iters = range(len(self.losses[loss_type]))
+        plt.figure()
+        # acc
+        plt.plot(iters, self.accuracy[loss_type], 'r', label='train acc')
+        # loss
+        plt.plot(iters, self.losses[loss_type], 'g', label='train loss')
+        if loss_type == 'epoch':
+            # val_acc
+            plt.plot(iters, self.val_acc[loss_type], 'b', label='val acc')
+            # val_loss
+            plt.plot(iters, self.val_loss[loss_type], 'k', label='val loss')
+        plt.grid(True)
+        plt.xlabel(loss_type)
+        plt.ylabel('acc-loss')
+        plt.legend(loc="upper right")
+        plt.show()
+
+
+# Turn off TF verbose logging
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
+print("------Begin------")
+
+features = Extract_Spectrum_feature()
+# feature.load_preprocess_data()
+#features = Extract_feature()
+features.load_deserialize_data()
+
+# features.load_deserialize_data()
+# Keras optimizer defaults:
+# Adam   : lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8, decay=0.
+# RMSprop: lr=0.001, rho=0.9, epsilon=1e-8, decay=0.
+# SGD    : lr=0.01, momentum=0., decay=0.
+opt = Adam()
+
+batch_size = 2
+nb_epochs = 5
+
+print("Training X shape: " + str(features.train_X.shape))
+print("Training Y shape: " + str(features.train_Y.shape))
+
+print("Test X shape: " + str(features.test_X.shape))
+print("Test Y shape: " + str(features.test_Y.shape))
+
+input_shape = (features.train_X.shape[1], features.train_X.shape[2], features.train_X.shape[3])
 def Conv2d_BN(x, nb_filter, kernel_size, strides=(1, 1), padding='same', name=None):
     if name is not None:
         bn_name = name + '_bn'
@@ -24,7 +92,7 @@ def Conv2d_BN(x, nb_filter, kernel_size, strides=(1, 1), padding='same', name=No
     return x
 
 
-def Conv_Block(inpt, nb_filter, kernel_size, strides=(1, 1), with_conv_shortcut=False):
+def Conv_Block(inpt: object, nb_filter: object, kernel_size: object, strides: object = (1, 1), with_conv_shortcut: object = False) -> object:
     x = Conv2d_BN(inpt, nb_filter=nb_filter[0], kernel_size=(1, 1), strides=strides, padding='same')
     x = Conv2d_BN(x, nb_filter=nb_filter[1], kernel_size=(3, 3), padding='same')
     x = Conv2d_BN(x, nb_filter=nb_filter[2], kernel_size=(1, 1), padding='same')
@@ -36,8 +104,7 @@ def Conv_Block(inpt, nb_filter, kernel_size, strides=(1, 1), with_conv_shortcut=
         x = add([x, inpt])
         return x
 
-
-inpt = Input(shape=(512,512,3))
+inpt = Input(shape=input_shape)
 x = ZeroPadding2D((3, 3))(inpt)
 x = Conv2d_BN(x, nb_filter=64, kernel_size=(7, 7), strides=(2, 2), padding='valid')
 x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding='same')(x)
@@ -70,23 +137,21 @@ sgd = SGD(decay=0.0001, momentum=0.9)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 model.summary()
 
-data = np.zeros((3, 512, 512,3),dtype=np.int32)
 
-
-data[0,:,:,:]=cv2.imread("lena1.jpg", -1)
-data[1,:,:,:]=cv2.imread("lena2.jpg", -1)
-data[2,:,:,:]=cv2.imread("lena3.jpg", -1)
-
-train=cv2.imread("lena1.jpg", -1)
-
-label=np.array([[1,1],
-       [2,0],
-       [3,0]])
-
-
+# 创建一个实例history
+history = LossHistory()
 print("Training ...")
-model.fit(data, label, batch_size=2, epochs=5)
-# model.fit()
+model.fit(features.train_X, features.train_Y, batch_size=batch_size, verbose=1,
+          epochs=nb_epochs, validation_data=(features.test_X, features.test_Y), callbacks=[history], )
+
+print("\nTesting ...")
+score, accuracy = model.evaluate(features.test_X, features.test_Y, batch_size=batch_size, verbose=1)
+print("Test loss:  ", score)
+print("Test accuracy:  ", accuracy)
+
+# 绘制acc-loss曲线
+history.loss_plot('epoch')
+
 
 
 
